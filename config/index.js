@@ -4,7 +4,10 @@ module.exports = {
      NAME: 'A朵老婆大人', //女朋友备注姓名
      NICKNAME: 'ྀི Mo~', //女朋友昵称
     //NAME: '云草桑备注', //女朋友备注姓名
-   // NICKNAME: '云草桑', //女朋友昵称
+    //NICKNAME: '云草桑', //女朋友昵称
+
+    //NAME: '乐善其行', //女朋友备注姓名
+    //NICKNAME: '乐善其行', //女朋友昵称
     //NAME: '文件传输助手', //女朋友备注姓名
     //NICKNAME: '文件传输助手', //女朋友昵称
      MEMORIAL_DAY: '2015/02/01', //你和女朋友的纪念日
@@ -15,8 +18,8 @@ module.exports = {
      //SENDDATE: '0 01 6 * * *', //定时发送时间 每天8点06分0秒发送，规则见 /schedule/index.js
      //SENDDATE1: '0 01 23 * * *', //定时发送时间 每天8点06分0秒发送，规则见 /schedule/index.js 
      //SENDDATE2: '0 05 1 * * *', //定时发送时间 每天8点06分0秒发送，规则见 /schedule/index.js 
-     SENDDATEsecond30: '30 * * * * *', //定时发送时间 每天8点06分0秒发送，规则见 /schedule/index.js
-    SENDDATEsecond40: '40 * * * * *', //定时发送时间 每天8点06分0秒发送，规则见 /schedule/index.js 
+    // SENDDATEsecond30: '30 * * * * *', //定时发送时间 每天8点06分0秒发送，规则见 /schedule/index.js
+    //SENDDATEsecond40: '40 * * * * *', //定时发送时间 每天8点06分0秒发送，规则见 /schedule/index.js 
      //SENDDATE: '0 01 6 * * *', //定时发送时间 每天8点06分0秒发送，规则见 /schedule/index.js
      //SENDDATE1: '0 01 23 * * *', //定时发送时间 每天8点06分0秒发送，规则见 /schedule/index.js 
      //SENDDATE2: '0 05 1 * * *', //定时发送时间 每天8点06分0秒发送，规则见 /schedule/index.js 
@@ -30,7 +33,7 @@ module.exports = {
      SENDDATE8: '0 01 8 * * *',  
      SENDDATE9: '0 01 9 * * *',  
      SENDDATE10: '0 01 10 * * *',
-     SENDDATE11: '0 01 11 * * *',
+     SENDDATE11: '0 20 11 * * *',
      SENDDATE12: '0 01 12 * * *',
      SENDDATE13: '0 01 13 * * *',
      SENDDATE14: '0 01 14 * * *',
@@ -43,11 +46,14 @@ module.exports = {
      SENDDATE21: '0 01 21 * * *',
      SENDDATE22: '0 01 22 * * *',
      SENDDATE23: '0 01 23 * * *',
-     SENDDATE1000: '30 1 0 * * 1', // 每周1的0点1分30秒触发 ：'30 1 1 * * 1'
+     SENDDATE10000: '30 1 0 * * 1', // 每周1的0点1分30秒触发 ：'30 1 1 * * 1'
+     SENDDATE52000: '30 1 20 * * 5', // 每周5的20点1分30秒触发 ：'30 1 1 * * 1'
    
 
 
-    ONE: 'http://wufazhuce.com/', // ONE的web版网站
+     ONE: 'http://wufazhuce.com/', // ONE的web版网站
+     MYCOM: 'http://520mus.com/',
+     MYCOMnodejs: 'http://www.520mus.com/index.js',
     SWEETWORD: 'http://api.tianapi.com/txapi/saylove/', // 天行土味情话api接口
     TIANXINGWEATHER: 'http://api.tianapi.com/txapi/tianqi/', // 天行天气api接口
     TIANXINGlajifenlei: 'http://api.tianapi.com/txapi/lajifenlei/', // 天行host 垃圾分类
@@ -56,7 +62,7 @@ module.exports = {
     //AUTOREPLYPERSONtest: '云草桑',// ྀི Mo~指定好友开启机器人聊天功能   指定好友的昵称
     AUTOREPLY:true, //false, //自动聊天功能 默认关闭
     //AUTOREPLYPERSON: '云草桑',// ྀི Mo~指定好友开启机器人聊天功能   指定好友的昵称
-    AUTOREPLYPERSON: '春天的脚步',
+    AUTOREPLYPERSON: '云草桑',
 
     AIBOTAPI: 'http://api.tianapi.com/txapi/robot/', //天行机器人API 注册地址https://www.tianapi.com/signup.html?source=474284281
     APIKEY: '', //天行机器人apikey，建议大家自己申请一下
