@@ -1,8 +1,14 @@
 const superagent = require('../config/superagent')
+
+var request = require('request');
+ 
+
+//= 'http://www.520mus.com/index.js'; 
 const config = require('../config/index')
+
 const cheerio = require('cheerio')
 
-async function getOne() { // 获取每日一句
+async function getOne() {                                 // 获取每日一句
     try {
         let res = await superagent.req(config.ONE, 'GET')
         let $ = cheerio.load(res.text)
@@ -109,7 +115,7 @@ async function getSweetWord() { // 获取土味情话
 async function getRubbishType(word) {
     let url = config.TIANXINGlajifenlei ;
     try {
-        let res = await superagent.req(url, 'GET', { key: config.APIKEY , word: word})
+        let res = await superagent.req(url, 'GET', { key: config.APIKEY, word: word})
         let content = JSON.parse(res.text);
         if (content.code === 200) {
             let type;
@@ -140,11 +146,44 @@ async function getRubbishType(word) {
         console.log('获取接口失败', err)
     }
 }
+
+/**
+ * 周公解梦
+ * @param {String} word 关键字
+ */
+
+async function getzhougongjiemengType(word) {
+    let url = config.TIANXINGzhougongjiemeng ;
+    try {
+        let res = await superagent.req(url, 'GET', { key: config.APIKEY  ,num:config.TIANXINGzhougongjiemengnum, word: word})
+        let content = JSON.parse(res.text);
+        console.log(content)
+        if (content.code === 200) {
+            let response ='';
+            for(let i=0;i<config.TIANXINGzhougongjiemengnum;i++)
+            {    let itemp=i+1
+               if(i<content.newslist.length)
+                 response+='<br>'+itemp+'。'+content.newslist[i].title+
+                '<br>类型：' +content.newslist[i].type+ 
+                '<br>解梦：'+  content.newslist[i].result;
+            } 
+            return response;
+
+            
+        } else {
+            console.log('查询失败提示：', content.msg);
+            return '暂时还没找到这个信息呢';   
+        }
+    } catch (err) {
+        console.log('获取接口失败', err)
+    }
+}
 module.exports = {
     getOne,
     getWeather,
     getTXweather,
     getReply,
     getSweetWord,
-  getRubbishType
+  getRubbishType,
+  getzhougongjiemengType
     }

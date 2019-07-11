@@ -36,35 +36,97 @@ async function onLogin(user) {
     //11点
     await initDay11()
     //1 这家伙通宵了吧
-     await initDay1()
+    await initDay1()
     
 }
 
 //登出
 function onLogout(user) {
     console.log(`小助手${user} 已经登出`)
-}
+} 
 
 // 监听对话
 async function onMessage(msg) {
     const contact = msg.from() // 发消息人
+    
+    
     const content = msg.text().trim() //消息内容
     const room = msg.room() //是否是群消息
+    
     const alias = await contact.alias() // 发消息人备注 
     const contactname = await contact.name()                //
     
     const contactfriend = await contact.friend()                //昵称
     const isText = msg.type() === bot.Message.Type.Text
+    const contacttype =contact.type() //发消息人类型 2好像是公告号 1 是人
+    const contactgender =await contact.gender() //发消息人性别
 
-    if (msg.self()) {
-        console.log('跳过：',contact.name())
-        return
-    }
-    if (room &&isText) { // 如果是群消息
-        //  const topic = await room.topic()
-        //console.log(`群名: ${topic} 发消息人: ${contact.name()} 内容: ${content}`)
-    }else if(isText){ // 如果非群消息 目前只处理文字消息
-        console.log(`处理1发消息人昵称: ${contactname} 发消息人备注: ${alias} 消息内容: ${content}`)
+    //if (msg.self()) {
+    //    console.log('跳过：',contact.name())
+    //    return
+    //}
+    if (config.AUTOREPLYroom&&room &&isText) { // 如果是群消息
+        const topic = await room.topic()
+        // const mentionSelf= await msg.mentionSelf()
+        //const roomfrom = msg.room().from() //是否是群消息&&mentionSelf
+        if(config.AUTOREPLYPERSONSroom.indexOf(topic)>-1)  //指定多个好友群开启机器人聊天功能
+        {
+            if (msg.self()&& config.AUTOREPLYroomself) {
+                console.log('跳过：',contact.name())
+                return
+            }
+            else{ 
+                console.log(`群名: ${topic} 发消息人: ${contact.name()} 内容: ${content}`)
+                let  strroomtemp =  content.substr(0,config.AUTOREPLYroomBakNAMElenth)  //截至为520 
+                //功能2个关键字
+             //   let  strroomtempgongnengkey2 =  strroomtemp.substr(2,3)
+
+                let strstr = config.AUTOREPLYroomBakNAMElenth+'__'+ strroomtemp+'@'+config.AUTOREPLYroomBakNAME
+                console.log('1'+strstr+'2'+topic+'3'+contact+'4'+strroomtemp+'5'+content.substr(3,2)) //
+                if(strroomtemp==config.AUTOREPLYroomBakNAME&&content&&strroomtemp&&content.substr(3,2)=='周公') 
+                { 
+                    let contactContent = content.replace('520周公','') 
+                    let replyroom = await superagent.getzhougongjiemengType(contactContent)  
+                    let str520MUSroom= '❤520mus.com：'+replyroom
+                    try {
+                        await delay(2000) 
+                        await room.say(str520MUSroom)
+                    } catch (e) {
+                        console.error(e)
+                    }
+                }
+                    //周公解梦 getzhougongjiemengType
+                else if(strroomtemp==config.AUTOREPLYroomBakNAME&&content){
+                    let replyroom = await superagent.getReply(content)  
+                    let str520MUSroom= '❤520mus.com：'+replyroom
+                    try {
+                        await delay(2000) 
+                        await room.say(str520MUSroom)
+                    } catch (e) {
+                        console.error(e)
+                    } 
+                } 
+                else if(content.substr(0,config.AUTOREPLYroomBakNAMElenth)==config.AUTOREPLYroomBakNAME&&content)
+                { 
+                    let contactContent = content.replace('520','')
+                    let replyroom = await superagent.getReply(contactContent)  
+                    let str520MUSroom= '❤520mus.com：'+replyroom
+                    try {
+                        await delay(2000) 
+                        await room.say(str520MUSroom)
+                    } catch (e) {
+                        console.error(e)
+                    }
+                }
+            }
+        }
+          
+    }else if(isText&&contacttype==1){ // 如果非群消息 目前只处理文字消息 1为人
+        
+        // console.log(`类型: ${contact}`)  
+        // let reply = contacttype
+        // console.log('类型', reply)
+        //console.log(`处理1发消息人昵称: ${contactname} 发消息人备注: ${alias} 消息内容: ${content}`)
         if(content.substr(0,1)=='?'||content.substr(0,1)=='？'){
             let contactContent = content.replace('?','').replace('？','')
             if(contactContent){ 
@@ -74,25 +136,31 @@ async function onMessage(msg) {
                 await contact.say(res)
             }
         } 
-
-        //else  if(config.AUTOREPLY&&(config.AUTOREPLYPERSONS.indexOf(contactname)>-1||config.AUTOREPLYPERSONS.indexOf(alias)>-1))
+            //else  if(config.AUTOREPLY&&(config.AUTOREPLYPERSONS.indexOf(contactname)>-1||config.AUTOREPLYPERSONS.indexOf(alias)>-1))
         else  if(config.AUTOREPLY&&contactfriend)
-         {
-            console.log(`处理3发消息人昵称: ${contactname} 发消息人备注: ${alias} 消息内容: ${content}`)
-            // 如果开启自动聊天且已经指定了智能聊天的对象才开启机器人聊天，
-            //不对老婆大人开启自动聊天。机器人会聊死的
-            //if (content&&alias!='A朵老婆大人'&&alias!='春天的脚步') { 
-            if (content) { 
-                let reply = await superagent.getReply(content) 
-                console.log('音娱乐行：', reply)
-                let str520MUS= '音娱乐行:'+reply
-                try {
-                    await delay(2000)
-                    await contact.say(str520MUS)
-                } catch (e) {
-                    console.error(e)
-                }
-            } 
+        {
+            if (msg.self()) {
+                console.log('跳过：',contact.name())
+                return
+            }
+            else{
+
+                console.log(`处理3发消息人昵称: ${contactname} 发消息人备注: ${alias} 消息内容: ${content}`)
+                // 如果开启自动聊天且已经指定了智能聊天的对象才开启机器人聊天，
+                //不对老婆大人开启自动聊天。机器人会聊死的
+                //if (content&&alias!='A朵老婆大人'&&alias!='春天的脚步') { 
+                if (content) { 
+                    let reply = await superagent.getReply(content) 
+                    console.log('音娱乐行：', reply)
+                    let str520MUS= '音娱乐行:'+reply
+                    try {
+                        await delay(2000)
+                        await contact.say(str520MUS)
+                    } catch (e) {
+                        console.error(e)
+                    }
+                } 
+            }
         } 
     } 
 }
@@ -124,7 +192,7 @@ async function initDay6() {
 // 创建微信520MUS说爱你定时任务
 async function initDay11() {
     console.log(`已经设定520MUS说爱你任务二`) 
-    schedule.setSchedule(config.SENDDATEsecond30, async() => {
+    schedule.setSchedule(config.SENDDATE23, async() => {
         console.log('你的晚安小助理开始工作啦！')
         let logMsg1
         let contact1 = await bot.Contact.find({ name: config.NICKNAME }) || await bot.Contact.find({ alias: config.NAME }) // 获取你要发送的联系人
@@ -149,7 +217,7 @@ async function initDay11() {
 // 创建微信520MUS说爱你定时任务
 async function initDay1() {
     console.log(`已经设定520MUS说爱你任务三`) 
-    schedule.setSchedule(config.SENDDATEsecond40, async() => {
+    schedule.setSchedule(config.SENDDATE1, async() => {
         console.log('你的通宵小助理开始工作啦！')
         let logMsg2
         let contact2 = await bot.Contact.find({ name: config.NICKNAME }) || await bot.Contact.find({ alias: config.NAME }) // 获取你要发送的联系人
@@ -177,8 +245,10 @@ bot.on('scan', onScan)
 bot.on('login', onLogin)
 bot.on('logout', onLogout)
 bot.on('message', onMessage)
-
-
+//
+bot.on('room-topic', (room, topic, oldTopic, changer) => {
+    console.log(`Room ${room.topic()} topic changed from ${oldTopic} to ${topic} by ${changer.name()}`)
+})
 bot.start()
     .then(() => console.log('开始登陆微信'))
     .catch(e => console.error(e))
