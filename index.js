@@ -79,8 +79,9 @@ async function onMessage(msg) {
                 console.log(`群名: ${topic} 发消息人: ${contact.name()} 内容: ${content}`)
                 let  strroomtemp =  content.substr(0,config.AUTOREPLYroomBakNAMElenth)  //截至为520 
                 //功能2个关键字
-             //   let  strroomtempgongnengkey2 =  strroomtemp.substr(2,3)
+                //   let  strroomtempgongnengkey2 =  strroomtemp.substr(2,3)
 
+                //周公解梦 getzhougongjiemengType
                 let strstr = config.AUTOREPLYroomBakNAMElenth+'__'+ strroomtemp+'@'+config.AUTOREPLYroomBakNAME
                 console.log('1'+strstr+'2'+topic+'3'+contact+'4'+strroomtemp+'5'+content.substr(3,2)) //
                 if(strroomtemp==config.AUTOREPLYroomBakNAME&&content&&strroomtemp&&content.substr(3,2)=='周公') 
@@ -95,7 +96,7 @@ async function onMessage(msg) {
                         console.error(e)
                     }
                 }
-                    //周公解梦 getzhougongjiemengType
+                 
                 else if(strroomtemp==config.AUTOREPLYroomBakNAME&&content){
                     let replyroom = await superagent.getReply(content)  
                     let str520MUSroom= '❤520mus.com：'+replyroom
@@ -136,8 +137,9 @@ async function onMessage(msg) {
                 await contact.say(res)
             }
         } 
-            //else  if(config.AUTOREPLY&&(config.AUTOREPLYPERSONS.indexOf(contactname)>-1||config.AUTOREPLYPERSONS.indexOf(alias)>-1))
-        else  if(config.AUTOREPLY&&contactfriend)
+        //跳过黑名单备注名开头的 
+        //else  if(config.AUTOREPLY&&(config.AUTOREPLYPERSONS.indexOf(contactname)>-1||config.AUTOREPLYPERSONS.indexOf(alias)>-1))
+       else  if(config.AUTOREPLY&&contactfriend&&!config.AUTOREPLYPERSONSblacks==contact.name().substr(0,4) &&!AUTOREPLYPERSONSblack.indexOf(contactname)>-1)
         {
             if (msg.self()) {
                 console.log('跳过：',contact.name())
