@@ -45,7 +45,7 @@ module.exports = {
      SENDDATE20: '0 01 20 * * *',
      SENDDATE21: '0 01 21 * * *',
      SENDDATE22: '0 01 22 * * *',
-     SENDDATE23: '0 01 23 * * *',
+     SENDDATE23: '0 45 23 * * *',
      SENDDATE10000: '30 1 0 * * 1', // 每周1的0点1分30秒触发 ：'30 1 1 * * 1'
      SENDDATE52000: '30 1 20 * * 5', // 每周5的20点1分30秒触发 ：'30 1 1 * * 1'
    
@@ -66,7 +66,7 @@ module.exports = {
     //AUTOREPLYPERSON: '云草桑',// ྀི Mo~指定好友开启机器人聊天功能   指定好友的昵称
     AUTOREPLYPERSON: '云草桑', 
     AIBOTAPI: 'http://api.tianapi.com/txapi/robot/', //天行机器人API 注册地址https://www.tianapi.com/signup.html?source=474284281
-    APIKEY:  '762be789103e1ae7b65573f8d4fc0df6',  //天行机器人apikey，这里奉献上我自己的key，还是建议大家自己申请一下
+    APIKEY:   '762be789103e1ae7b65573f8d4fc0df6',  //天行机器人apikey，这里奉献上我自己的key，还是建议大家自己申请一下
     DEFAULTBOT: '0', //设置默认聊天机器人 0 天行机器人 1 图灵机器人 2 天行对接的图灵机器人，需要到天行机器人官网充值（50元/年，每天500次）
     AUTOREPLYPERSONSblack: ['青橙财务彭', '云草桑'], //默认用黑名单功能
     AUTOREPLYPERSONSblacks: 'NBot', //默认关闭备注名称开头为这个的
@@ -75,7 +75,7 @@ module.exports = {
     AUTOREPLYroom: true, //群聊回复
 
     AUTOREPLYPERSONSroom: ['互赞互粉2群', '音娱乐行', '相亲相爱一家人', '广州风音部落', '伯克利污污小火车', '安静点，不喳，严气',
-        '教院扛把子', '亲戚环城线', '有么子说么子'], //指定多个好友群开启机器人聊天功能   指定群备注，最好不要带有特殊字符
+        '教院扛把子', '亲戚环城线', '有么子说么子', '国际名人', '明天会更好', 'StreetArt', '小伙伴在深圳'], //指定多个好友群开启机器人聊天功能   指定群备注，最好不要带有特殊字符
     AUTOREPLYroomBakNAME: '520',//群内备注名称
     AUTOREPLYroomBakNAMElenth:3,//群内备注字符长度
     AUTOREPLYroomself: false,//群聊是否关闭自己@自己  设置为true 则@自己不聊天了

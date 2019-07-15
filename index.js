@@ -82,8 +82,8 @@ async function onMessage(msg) {
                 //   let  strroomtempgongnengkey2 =  strroomtemp.substr(2,3)
 
                 //周公解梦 getzhougongjiemengType
-                let strstr = config.AUTOREPLYroomBakNAMElenth+'__'+ strroomtemp+'@'+config.AUTOREPLYroomBakNAME
-                console.log('1'+strstr+'2'+topic+'3'+contact+'4'+strroomtemp+'5'+content.substr(3,2)) //
+                //let strstr = config.AUTOREPLYroomBakNAMElenth+'__'+ strroomtemp+'@'+config.AUTOREPLYroomBakNAME
+                //console.log('1'+strstr+'2'+topic+'3'+contact+'4'+strroomtemp+'5'+content.substr(3,2)) //
                 if(strroomtemp==config.AUTOREPLYroomBakNAME&&content&&strroomtemp&&content.substr(3,2)=='周公') 
                 { 
                     let contactContent = content.replace('520周公','') 
@@ -128,6 +128,8 @@ async function onMessage(msg) {
         // let reply = contacttype
         // console.log('类型', reply)
         //console.log(`处理1发消息人昵称: ${contactname} 发消息人备注: ${alias} 消息内容: ${content}`)
+        let strstr = config.AUTOREPLYroomBakNAMElenth+'__'+'@'+config.AUTOREPLYroomBakNAME    //+ strroomtemp
+        console.log('1'+AUTOREPLYPERSONSblack+'2'+contactname+'3'+config.AUTOREPLYPERSONSblacks+'4'+contact.name().substr(0,4)+'5'+content) 
         if(content.substr(0,1)=='?'||content.substr(0,1)=='？'){
             let contactContent = content.replace('?','').replace('？','')
             if(contactContent){ 
@@ -138,8 +140,9 @@ async function onMessage(msg) {
             }
         } 
         //跳过黑名单备注名开头的 
-        //else  if(config.AUTOREPLY&&(config.AUTOREPLYPERSONS.indexOf(contactname)>-1||config.AUTOREPLYPERSONS.indexOf(alias)>-1))
-       else  if(config.AUTOREPLY&&contactfriend&&!config.AUTOREPLYPERSONSblacks==contact.name().substr(0,4) &&!AUTOREPLYPERSONSblack.indexOf(contactname)>-1)
+            //else  if(config.AUTOREPLY&&(config.AUTOREPLYPERSONS.indexOf(contactname)>-1||config.AUTOREPLYPERSONS.indexOf(alias)>-1))
+ 
+        else  if(config.AUTOREPLY&&contactfriend &&!AUTOREPLYPERSONSblack.indexOf(contactname)>-1&&!config.AUTOREPLYPERSONSblacks==contact.name().substr(0,4))
         {
             if (msg.self()) {
                 console.log('跳过：',contact.name())
