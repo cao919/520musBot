@@ -41,3 +41,4 @@ Ctrl+C 之后点Y 为取消关闭
            2群周公解梦接口开发触发
 		   
 2019071202：私聊屏蔽NBot开头的人。
+2019071501:还不怎么会用GitHub Desktop 把代码更新了最新 https://www.jianshu.com/p/1e45b93bd593 
