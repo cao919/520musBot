@@ -129,7 +129,7 @@ async function onMessage(msg) {
         // console.log('类型', reply)
         //console.log(`处理1发消息人昵称: ${contactname} 发消息人备注: ${alias} 消息内容: ${content}`)
         let strstr = config.AUTOREPLYroomBakNAMElenth+'__'+'@'+config.AUTOREPLYroomBakNAME    //+ strroomtemp
-        console.log('1'+AUTOREPLYPERSONSblack+'2'+contactname+'3'+config.AUTOREPLYPERSONSblacks+'4'+contact.name().substr(0,4)+'5'+content) 
+        console.log('1'+config.AUTOREPLYPERSONSblack+'2'+contactname+'3'+config.AUTOREPLYPERSONSblacks+'4'+contact.name().substr(0,4)+'5'+content) 
         if(content.substr(0,1)=='?'||content.substr(0,1)=='？'){
             let contactContent = content.replace('?','').replace('？','')
             if(contactContent){ 
@@ -142,7 +142,7 @@ async function onMessage(msg) {
         //跳过黑名单备注名开头的 
             //else  if(config.AUTOREPLY&&(config.AUTOREPLYPERSONS.indexOf(contactname)>-1||config.AUTOREPLYPERSONS.indexOf(alias)>-1))
  
-        else  if(config.AUTOREPLY&&contactfriend &&!AUTOREPLYPERSONSblack.indexOf(contactname)>-1&&!config.AUTOREPLYPERSONSblacks==contact.name().substr(0,4))
+        else  if(config.AUTOREPLY&&contactfriend &&!config.AUTOREPLYPERSONSblack.indexOf(contactname)>-1&&!config.AUTOREPLYPERSONSblacks==contact.name().substr(0,4))
         {
             if (msg.self()) {
                 console.log('跳过：',contact.name())
