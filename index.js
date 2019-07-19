@@ -132,18 +132,26 @@ async function onMessage(msg) {
         // console.log('类型', reply)
         //console.log(`处理1发消息人昵称: ${contactname} 发消息人备注: ${alias} 消息内容: ${content}`)
         let strstr = config.AUTOREPLYroomBakNAMElenth+'__'+'@'+config.AUTOREPLYroomBakNAME    //+ strroomtemp
-
+        let contactnameyuan=contactname
         let  contactnamesubstr=contactname.substr(0,4)  
+        let stralias='没有备注'
         console.log('contactnamesubstr'+contactnamesubstr)
-        if( alias==null||alias==NUll||alias=="")
-            alias="没有备注呢"
-        let  aliassubstr= alias.substr(0,4) 
+         if(alias==null||alias==NUll||alias==''||alias.length<4)
+        {
+           
+        }    
+        else if(alias.length>4)
+        {
+            stralias=alias
+        }
+        
+        let  aliassubstr= stralias.substr(0,4) 
         console.log('aliassubstr'+aliassubstr)
-        console.log('1'+!config.AUTOREPLYPERSONSblack.indexOf(contactname)>-1+'2'+contactname+'3'+config.AUTOREPLYPERSONSblacks+'4'+contact.name().substr(0,4)+'5'+content) 
+        console.log('1'+!config.AUTOREPLYPERSONSblack.indexOf(contactnameyuan)>-1+'2'+contactnameyuan+'3'+config.AUTOREPLYPERSONSblacks+'4'+contact.name().substr(0,4)+'5'+content) 
         if(content.substr(0,1)=='?'||content.substr(0,1)=='？'){
             let contactContent = content.replace('?','').replace('？','')
             if(contactContent){ 
-                console.log(`处理2发消息人昵称: ${contactname} 发消息人备注: ${alias} 消息内容: ${content}`)
+                console.log(`处理2发消息人昵称: ${contactnameyuan} 发消息人备注: ${alias} 消息内容: ${content}`)
                 let res = await superagent.getRubbishType(contactContent)
                 await delay(2000)
                 await contact.say(res)
@@ -153,7 +161,7 @@ async function onMessage(msg) {
             //else  if(config.AUTOREPLY&&(config.AUTOREPLYPERSONS.indexOf(contactname)>-1||config.AUTOREPLYPERSONS.indexOf(alias)>-1))
           
         //发信息人备注
-        else  if(config.AUTOREPLY&&contactfriend &&!config.AUTOREPLYPERSONSblack.indexOf(contactname)>-1&&!(config.AUTOREPLYPERSONSblacks==contactnamesubstr||config.AUTOREPLYPERSONSblacks==aliassubstr))
+        else  if(config.AUTOREPLY&&contactfriend &&!config.AUTOREPLYPERSONSblack.indexOf(contactnameyuan)>-1&&!(config.AUTOREPLYPERSONSblacks==contactnamesubstr||config.AUTOREPLYPERSONSblacks==aliassubstr))
         {
             if (msg.self()) {
                 console.log('跳过：',contact.name())
@@ -161,7 +169,7 @@ async function onMessage(msg) {
             }
             else{
 
-                console.log(`处理3发消息人昵称: ${contactname} 发消息人备注: ${alias} 消息内容: ${content}`)
+                console.log(`处理3发消息人昵称: ${contactnameyuan} 发消息人备注: ${alias} 消息内容: ${content}`)
                 // 如果开启自动聊天且已经指定了智能聊天的对象才开启机器人聊天，
                 //不对老婆大人开启自动聊天。机器人会聊死的
                 //if (content&&alias!='A朵老婆大人'&&alias!='春天的脚步') { 
