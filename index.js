@@ -61,7 +61,7 @@ async function onMessage(msg) {
     const contacttype =contact.type() //发消息人类型 2好像是公告号 1 是人
     const contactgender =await contact.gender() //发消息人性别
 
-
+   
     
 
     //if (msg.self()) {
@@ -69,6 +69,7 @@ async function onMessage(msg) {
     //    return
     //}
     if (config.AUTOREPLYroom&&room &&isText) { // 如果是群消息
+        //let msgmentionself= msg.mentionSelf()  //消息是否提及我 boolean 
         const topic = await room.topic()
         // const mentionSelf= await msg.mentionSelf()
         //const roomfrom = msg.room().from() //是否是群消息&&mentionSelf
@@ -87,7 +88,7 @@ async function onMessage(msg) {
                 //周公解梦 getzhougongjiemengType
                 //let strstr = config.AUTOREPLYroomBakNAMElenth+'__'+ strroomtemp+'@'+config.AUTOREPLYroomBakNAME
                 //console.log('1'+strstr+'2'+topic+'3'+contact+'4'+strroomtemp+'5'+content.substr(3,2)) //
-                if(strroomtemp==config.AUTOREPLYroomBakNAME&&content&&strroomtemp&&content.substr(3,2)=='周公') 
+                if((strroomtemp==config.AUTOREPLYroomBakNAME)&&content&&strroomtemp&&content.substr(3,2)=='周公') 
                 { 
                     let contactContent = content.replace('520周公','') 
                     let replyroom = await superagent.getzhougongjiemengType(contactContent)  
@@ -110,19 +111,41 @@ async function onMessage(msg) {
                 //        console.error(e)
                 //    } 
                     //} 
-                //群内回复的内容是配置的520则进来
-                else if(content.substr(0,config.AUTOREPLYroomBakNAMElenth)==config.AUTOREPLYroomBakNAME&&content)
+                //群内回复的内容是配置的520 或者@自己 则进来
+                else if((content.substr(0,config.AUTOREPLYroomBakNAMElenth)==config.AUTOREPLYroomBakNAME)&&content)
                 { 
-                    let contactContent = content.replace('520','')
-
-                    let replyroom = await superagent.getReply(contactContent)  
-                    let str520MUSroom= '❤520mus.com：'+replyroom
-                    try {
-                        await delay(2000) 
-                        await room.say(str520MUSroom)
-                    } catch (e) {
-                        console.error(e)
-                    }
+                    // //@自己
+                    //if(msg.mentionSelf()&&content)
+                    //{ 
+                    //    if (msg.self()&& config.AUTOREPLYroomself) {
+                    //        console.log('跳过：',contact.name())
+                    //        return
+                    //    } 
+                    //    let contactContent = content.replace('@所有人','')
+                        
+                    //    console.log('QQQ11*****mentionSelf'+msg.mentionSelf.alias+'22'+msg.self()+'33'+msg+'44'+contactContent)
+                    //    let replyroom = await superagent.getReply(contactContent)  
+                    //    let str520MUSroom= '❤520Bot：'+replyroom
+                    //    try {
+                    //        await delay(2000) 
+                    //        await room.say(str520MUSroom)
+                    //    } catch (e) {
+                    //        console.error(e)
+                    //    } 
+                    //}
+                    //if(content.substr(0,config.AUTOREPLYroomBakNAMElenth)==config.AUTOREPLYroomBakNAME&&content)
+                    //{
+                        let contactContent = content.replace('520','') 
+                        let replyroom = await superagent.getReply(contactContent)  
+                        let str520MUSroom= '❤520mus.com：'+replyroom
+                        try {
+                            await delay(2000) 
+                            await room.say(str520MUSroom)
+                        } catch (e) {
+                            console.error(e)
+                        }
+                    
+                    //} 
                 }
             }
         }
@@ -166,7 +189,11 @@ async function onMessage(msg) {
         console.log('331'+!config.AUTOREPLYPERSONSblack.indexOf(contactnameyuan)>-1+'2'+contactnameyuan+'3'+config.AUTOREPLYPERSONSblacks+'4'+contact.name().substr(0,4)+'5'+content) 
         if(content.substr(0,1)=='?'||content.substr(0,1)=='？'){
             let contactContent = content.replace('?','').replace('？','')
-            if(contactContent){ 
+            if(config.JumpImg&&(contactContent.search("？")<=0||contactContent.search("?")<=0))
+            {
+                     
+            } 
+           else if(contactContent&&contactContent.length>=2&&contactContent.substr(0,1)!='?'){ 
                 console.log(`44处理2发消息人昵称: ${contactnameyuan} 发消息人备注: ${alias} 消息内容: ${content}`)
                 let res = await superagent.getRubbishType(contactContent)
                 await delay(2000)
@@ -189,7 +216,14 @@ async function onMessage(msg) {
                 // 如果开启自动聊天且已经指定了智能聊天的对象才开启机器人聊天，
                 //不对老婆大人开启自动聊天。机器人会聊死的
                 //if (content&&alias!='A朵老婆大人'&&alias!='春天的脚步') { 
-                if (content) { 
+
+                //20190908 跳过表情开头的消息 jumpimg 设置为true  
+                //需要跳过的回复 如1表情开头 2啥 3语音和视频都屏蔽回复
+                if(config.JumpImg&&(content.search("<img class=")<=0||content.search("啥")<=0||content.search("[收到一条网页版微信暂不支持的消息")<=0||content.search("对方曾尝试与你进行")<=0))
+                {
+                     
+                } 
+                else if (content) { 
                     let reply = await superagent.getReply(content) 
                     console.log('777音娱乐行：', reply)
                     let str520MUS= '音娱乐行:'+reply
