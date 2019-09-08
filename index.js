@@ -219,7 +219,8 @@ async function onMessage(msg) {
 
                 //20190908 跳过表情开头的消息 jumpimg 设置为true  
                 //需要跳过的回复 如1表情开头 2啥 3语音和视频都屏蔽回复
-                if(config.JumpImg&&(content.search("<img class=")==0||content.search("啥")==0||content.search("[收到一条网页版微信暂不支持的消息")==0||content.search("对方曾尝试与你进行")==0))
+                let contactContent=content
+                if(config.JumpImg&&(contactContent.search("<img class=")==0||contactContent.search("啥")==0||contactContent.search("[收到一条网页版微信暂不支持的消息")==0||contactContent.search("对方曾尝试与你进行")==0))
                 {
                     
                 } 
